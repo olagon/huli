@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -15,6 +10,7 @@ final class BookArgs {
   static final String MODE = "mode";
   static final String SEQ = "seq";
   static final String SHOT_ID = "shotId";
+  static final String PAGE_ID = "pageId";
 
   private BookArgs() {}
 }

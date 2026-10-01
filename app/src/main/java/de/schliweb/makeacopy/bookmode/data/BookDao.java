@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.data;
 
@@ -154,6 +149,12 @@ public interface BookDao {
           + "WHERE book_pages.bookId = :bookId AND word_flags.reason = 'AUTO_FIXED' AND word_flags.resolved = 1 "
           + "ORDER BY book_pages.pageIndex, word_flags.wordIndex")
   List<WordFlagEntity> autoFixedFlags(long bookId);
+
+  @Query("SELECT * FROM word_flags WHERE pageId = :pageId")
+  List<WordFlagEntity> flagsForPage(long pageId);
+
+  @Query("SELECT COUNT(*) FROM word_flags WHERE pageId = :pageId AND resolved = 0 AND reason != 'AUTO_FIXED'")
+  int countUnresolvedFlagsForPage(long pageId);
 
   @Query("SELECT * FROM word_flags WHERE pageId = :pageId AND wordIndex = :wordIndex")
   List<WordFlagEntity> flagsForWord(long pageId, int wordIndex);

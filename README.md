@@ -6,13 +6,13 @@ Huli is a modified version of [MakeACopy](https://github.com/egdels/makeacopy) b
 
 ## Book Mode
 
-All new code lives in `app/src/main/java/de/schliweb/makeacopy/bookmode`. Open it from the book icon on the camera screen.
+All new code lives in `app/src/main/java/de/schliweb/makeacopy/bookmode`. Huli opens on a dashboard of your books, and Book Mode is the only way to scan. The About screen in the app has the full setup and scanning instructions.
 
-1. **New book.** Title, language, whether the book is printed with ʻokina and kahakō, and page layout.
+1. **New book.** Scan the title page to fill in the title and author, then pick the language, whether the book is printed with ʻokina and kahakō, and single page or two-page spread.
 2. **Setup shot.** Detect the page, drag the corners and spine, then lock focus, exposure and white balance.
 3. **Capture.** The border is red while a page turns, yellow while it settles, and green when ready. Shoot with the on-screen button, a volume key, a Bluetooth remote, or auto capture.
 4. **Processing.** Runs in the background: crop, spine split, curve flattening, deskew, on-device OCR with the PaddleOCR latin model, Hawaiian normalization, page numbers and word flags.
-5. **Review.** Page grid with badges, a warning when printed page numbers skip, and a queue of flagged words with ʻ ā ē ī ō ū buttons.
+5. **Review.** Page grid with badges and a warning when printed page numbers skip. Tap a page to read its OCR text or see the photo with word boxes, and tap any word to fix it. Check words walks through every doubtful word with ʻ ā ē ī ō ū buttons.
 6. **Export.** Searchable PDF and Word (.docx).
 
 The design is described in `BOOK_MODE_SPEC.md` (kept outside this repo).
@@ -43,8 +43,12 @@ git fetch upstream
 git merge upstream/main
 ```
 
-## Licenses
+## License
 
-- App code: Apache License 2.0, see [LICENSE](LICENSE) and [NOTICE](NOTICE).
-- Hawaiian word list (`assets/bookmode/haw.txt.gz`): derived from the [Hawaiian Corpus Project](https://github.com/dohliam/hawaiian-corpus) frequency list, CC0 1.0.
-- English word list (`assets/bookmode/eng.txt.gz`): derived from [FrequencyWords](https://github.com/hermitdave/FrequencyWords), CC BY-SA 4.0.
+Huli is free and open source.
+
+- **Huli's own code is MIT licensed** ([LICENSE-MIT](LICENSE-MIT)). That is every file with the header `SPDX-License-Identifier: MIT`: all of Book Mode, its tests, layouts, strings and drawables, and this README.
+- **Code from MakeACopy stays under the Apache License 2.0** ([LICENSE](LICENSE)), including the upstream files Huli modified. Apache 2.0 code can't be relicensed, so the repository is a mix of the two. Both licenses are permissive.
+- **Word lists keep their own licenses.** The Hawaiian list (`assets/bookmode/haw.txt.gz`) is derived from the [Hawaiian Corpus Project](https://github.com/dohliam/hawaiian-corpus) frequency list (CC0 1.0). The English list (`assets/bookmode/eng.txt.gz`) is derived from [FrequencyWords](https://github.com/hermitdave/FrequencyWords) (CC BY-SA 4.0).
+
+[NOTICE](NOTICE) lists the attributions and every upstream file Huli changed.

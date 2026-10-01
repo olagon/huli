@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Huli (modified): app name -->
     <string name="app_name">Huli</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->

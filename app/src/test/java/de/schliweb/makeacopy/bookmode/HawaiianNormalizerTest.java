@@ -1,3 +1,7 @@
+/*
+ * Copyright 2026 Olin Lagon
+ * SPDX-License-Identifier: MIT
+ */
 package de.schliweb.makeacopy.bookmode;
 
 import static org.junit.Assert.assertEquals;

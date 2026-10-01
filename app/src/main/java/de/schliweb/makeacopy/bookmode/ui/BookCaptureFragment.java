@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -162,7 +157,7 @@ public class BookCaptureFragment extends Fragment {
       showThresholds();
       return true;
     });
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.book_capture_buttons));
+    BookUi.fitSystemBars(v);
     v.setFocusableInTouchMode(true);
     v.setOnKeyListener(this::onKey);
     updateCounter();
@@ -411,7 +406,7 @@ public class BookCaptureFragment extends Fragment {
   private void finish() {
     Bundle args = new Bundle();
     args.putLong(BookArgs.BOOK_ID, book.id);
-    NavOptions opts = new NavOptions.Builder().setPopUpTo(R.id.navigation_book_list, false).build();
+    NavOptions opts = new NavOptions.Builder().setPopUpTo(R.id.navigation_dashboard, false).build();
     Navigation.findNavController(requireView()).navigate(R.id.navigation_book_grid, args, opts);
   }
 

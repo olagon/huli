@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -40,6 +35,7 @@ public class BookSetupFragment extends Fragment {
 
   @Override
   public void onViewCreated(@NonNull View v, @Nullable Bundle saved) {
+    BookUi.toolbar(this, v, getString(R.string.book_new));
     EditText title = v.findViewById(R.id.book_title);
     EditText author = v.findViewById(R.id.book_author);
     RadioGroup lang = v.findViewById(R.id.book_language_group);
@@ -48,6 +44,22 @@ public class BookSetupFragment extends Fragment {
     CheckBox firstRight = v.findViewById(R.id.book_first_right_only);
     RadioGroup dewarp = v.findViewById(R.id.book_dewarp_group);
     TextView storage = v.findViewById(R.id.book_storage_warning);
+    android.widget.ImageView coverView = v.findViewById(R.id.book_cover_preview);
+    v.findViewById(R.id.button_scan_title_page).setOnClickListener(x -> Navigation.findNavController(v).navigate(R.id.navigation_title_scan));
+    // Result of the title-page scan (set by TitleScanFragment on this back stack entry).
+    androidx.lifecycle.SavedStateHandle state = Navigation.findNavController(v).getCurrentBackStackEntry().getSavedStateHandle();
+    state.<String>getLiveData(TitleScanFragment.RESULT_TITLE).observe(getViewLifecycleOwner(), t -> {
+      if (t == null) return;
+      title.setText(t);
+      String a = state.get(TitleScanFragment.RESULT_AUTHOR);
+      if (a != null && !a.isEmpty()) author.setText(a);
+      state.remove(TitleScanFragment.RESULT_TITLE);
+    });
+    state.<String>getLiveData(TitleScanFragment.RESULT_COVER).observe(getViewLifecycleOwner(), path -> {
+      if (path == null || !new java.io.File(path).exists()) return;
+      coverView.setImageBitmap(android.graphics.BitmapFactory.decodeFile(path));
+      coverView.setVisibility(View.VISIBLE);
+    });
     layout.setOnCheckedChangeListener((g, id) -> firstRight.setVisibility(id == R.id.book_layout_spread ? View.VISIBLE : View.GONE));
 
     try {
@@ -82,10 +94,18 @@ public class BookSetupFragment extends Fragment {
               b.createdAt = System.currentTimeMillis();
               b.captureProfileJson = new CaptureProfile().toJson();
               long id = BookDatabase.get(requireContext()).dao().insertBook(b);
+              String coverPath = state.get(TitleScanFragment.RESULT_COVER);
+              if (coverPath != null) {
+                java.io.File src = new java.io.File(coverPath);
+                java.io.File dst = new java.io.File(BookFiles.bookDir(requireContext(), id), "cover.jpg");
+                if (src.exists() && dst.getParentFile() != null && (dst.getParentFile().exists() || dst.getParentFile().mkdirs()) && !src.renameTo(dst)) {
+                  android.util.Log.w("BookSetup", "could not keep the title page photo");
+                }
+                state.remove(TitleScanFragment.RESULT_COVER);
+              }
               Bundle args = new Bundle();
               args.putLong(BookArgs.BOOK_ID, id);
               Navigation.findNavController(v).navigate(R.id.navigation_book_setup_shot, args);
             });
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.book_setup_buttons));
   }
 }

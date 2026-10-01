@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -35,6 +30,7 @@ import de.schliweb.makeacopy.bookmode.data.BookDatabase;
 import de.schliweb.makeacopy.bookmode.data.BookPageEntity;
 import de.schliweb.makeacopy.bookmode.data.WordFlagEntity;
 import de.schliweb.makeacopy.bookmode.process.WordFlagger;
+import de.schliweb.makeacopy.bookmode.review.PageEdits;
 import de.schliweb.makeacopy.ui.ocr.review.model.OcrDoc;
 import de.schliweb.makeacopy.ui.ocr.review.store.OcrJsonStore;
 import java.io.File;
@@ -70,6 +66,7 @@ public class FlagQueueFragment extends Fragment {
 
   @Override
   public void onViewCreated(@NonNull View v, @Nullable Bundle saved) {
+    BookUi.toolbar(this, v, getString(R.string.book_check_words));
     dao = BookDatabase.get(requireContext()).dao();
     bookId = requireArguments().getLong(BookArgs.BOOK_ID);
     image = v.findViewById(R.id.flag_image);
@@ -86,7 +83,6 @@ public class FlagQueueFragment extends Fragment {
     v.findViewById(R.id.button_flag_accept).setOnClickListener(x -> accept());
     v.findViewById(R.id.button_flag_skip).setOnClickListener(x -> next());
     v.findViewById(R.id.button_flag_undo).setOnClickListener(x -> undo());
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.flag_buttons));
     flags = dao.unresolvedFlags(bookId);
     total = dao.countFlags(bookId);
     pos = 0;
@@ -176,7 +172,7 @@ public class FlagQueueFragment extends Fragment {
     f.resolved = true;
     dao.updateFlag(f);
     accepted.push(f);
-    BookDatabase.io(() -> setWordText(f.pageId, f.wordIndex, text));
+    BookDatabase.io(() -> PageEdits.setWordText(dao, f.pageId, f.wordIndex, text));
     next();
   }
 
@@ -197,25 +193,9 @@ public class FlagQueueFragment extends Fragment {
     f.resolved = false;
     f.resolvedText = null;
     dao.updateFlag(f);
-    BookDatabase.io(() -> setWordText(f.pageId, f.wordIndex, f.phoneText));
+    BookDatabase.io(() -> PageEdits.setWordText(dao, f.pageId, f.wordIndex, f.phoneText));
     int idx = flags.indexOf(f);
     if (idx >= 0) pos = idx;
     show();
-  }
-
-  private void setWordText(long pageId, int wordId, String text) {
-    BookPageEntity p = dao.getPage(pageId);
-    if (p == null || p.finalOcrPath == null) return;
-    File file = new File(p.finalOcrPath);
-    OcrDoc doc = OcrJsonStore.load(file);
-    if (doc == null) return;
-    for (OcrDoc.Word w : doc.words) {
-      if (w.id == wordId) {
-        w.t = text;
-        w.e = true;
-        break;
-      }
-    }
-    OcrJsonStore.save(file, doc);
   }
 }

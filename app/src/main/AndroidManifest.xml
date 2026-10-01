@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <!-- Haptics for subtle accessibility feedback (no runtime prompt required) -->
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <!-- Book Mode background processing (WorkManager foreground job) -->
+    <!-- Huli (modified): Book Mode background processing (WorkManager foreground job) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
@@ -50,28 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <!-- Receive images and PDFs shared from other apps (e.g. Gallery) -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:mimeType="image/*"/>
-                <data android:mimeType="application/pdf"/>
-            </intent-filter>
-
-            <!-- Receive "Open with" requests for images and PDFs -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data android:scheme="content"/>
-                <data android:scheme="file"/>
-                <data android:mimeType="image/*"/>
-                <data android:mimeType="application/pdf"/>
-            </intent-filter>
+            <!-- Huli (modified): no share or "Open with" targets; scanning happens only in Book Mode -->
         </activity>
         <!-- FileProvider for sharing files with other apps -->
         <provider

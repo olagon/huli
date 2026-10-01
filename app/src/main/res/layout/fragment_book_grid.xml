@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="8dp">
-
-        <TextView
-            android:id="@+id/book_grid_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-        <ImageButton
-            android:id="@+id/button_book_more"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/book_help"
-            android:src="@drawable/ic_tune"
-            app:tint="?attr/colorControlNormal"
-            xmlns:app="http://schemas.android.com/apk/res-auto" />
-    </LinearLayout>
+    <include layout="@layout/view_book_toolbar" />
 
     <TextView
         android:id="@+id/book_grid_info"

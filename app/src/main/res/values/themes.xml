@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme (Material3, compatible with Material widgets via M3 styles). -->
+    <!-- Huli (modified): brand colors from colors_huli.xml -->
     <style name="Theme.MakeACopy" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/huli_primary</item>
+        <item name="colorOnPrimary">@color/huli_on_primary</item>
         <!-- M3 container tokens used by components -->
-        <item name="colorPrimaryContainer">@color/purple_200</item>
-        <item name="colorOnPrimaryContainer">@color/purple_700</item>
+        <item name="colorPrimaryContainer">@color/huli_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/huli_on_primary_container</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/huli_secondary</item>
+        <item name="colorOnSecondary">@color/huli_on_secondary</item>
 
         <!-- Surface -->
         <item name="colorOnSurface">@color/black</item>

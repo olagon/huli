@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -114,7 +109,7 @@ public class BookSetupShotFragment extends Fragment {
           updateThumb();
         });
     confirm.setOnClickListener(x -> lockAndMeasure());
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.book_setup_shot_buttons));
+    BookUi.fitSystemBars(v);
     camera = new BookCamera(this, preview);
     if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) startCamera();
     else cameraPermission.launch(Manifest.permission.CAMERA);
@@ -279,7 +274,7 @@ public class BookSetupShotFragment extends Fragment {
     Bundle args = new Bundle();
     args.putLong(BookArgs.BOOK_ID, book.id);
     args.putString(BookArgs.MODE, "append");
-    NavOptions opts = new NavOptions.Builder().setPopUpTo(R.id.navigation_book_list, false).build();
+    NavOptions opts = new NavOptions.Builder().setPopUpTo(R.id.navigation_dashboard, false).build();
     Navigation.findNavController(requireView()).navigate(R.id.navigation_book_capture, args, opts);
   }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT. Huli brand colors (light). -->
+<resources>
+    <color name="huli_primary">#0B5D4B</color>
+    <color name="huli_on_primary">#FFFFFF</color>
+    <color name="huli_primary_container">#B8EBD9</color>
+    <color name="huli_on_primary_container">#00201A</color>
+    <color name="huli_secondary">#8A6100</color>
+    <color name="huli_on_secondary">#FFFFFF</color>
+    <color name="huli_status_ok">#2E7D32</color>
+    <color name="huli_status_check">#B26A00</color>
+    <color name="huli_status_busy">#1565C0</color>
+    <color name="huli_status_idle">#757575</color>
+</resources>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="book_mode">Book Mode</string>
-    <string name="book_open_book_mode">Open Book Mode</string>
     <string name="book_new">New book</string>
     <string name="book_no_books">No books yet. Tap New book to start.</string>
-    <string name="book_help">Help</string>
     <string name="book_title_hint">Title</string>
     <string name="book_author_hint">Author (optional)</string>
     <string name="book_language">Language</string>
@@ -53,7 +52,7 @@
     <string name="book_pages_none">No pages yet. Tap Capture to start shooting.</string>
     <string name="book_processing_status">Processing %1$d of %2$d</string>
     <string name="book_storage_used">Storage %1$s</string>
-    <string name="book_review_flags">Flags (%1$d)</string>
+    <string name="book_review_flags">Check words (%1$d)</string>
     <string name="book_export">Export</string>
     <string name="book_free_space">Free up space</string>
     <string name="book_auto_fixed">Auto-fixed words (%1$d)</string>
@@ -101,5 +100,88 @@
     <string name="book_delete">Delete</string>
     <string name="book_cancel">Cancel</string>
     <string name="book_ok">OK</string>
-    <string name="book_help_text">Setting up\n\n• Put the phone on a tripod or overhead stand, looking straight down, parallel to the table.\n• Put a dark, matte cloth under the book. The page edges need to stand out for page detection and curve flattening.\n• Use two lights, one on each side at about 45 degrees. No light straight overhead (glare and shadows).\n• Optional: a sheet of glass or clear acrylic to press the pages flat. With glass on, set curve flattening to Off for that book.\n• Use a Bluetooth camera remote (it sends volume key presses), keep the phone on a charger, and turn on Do Not Disturb.\n\nScanning\n\n1. New book: enter the title, pick the language, say whether the book is printed with ʻokina and kahakō, and pick the layout.\n2. Setup shot: tap Detect page, drag the corners to the page edges and the dashed line onto the spine, rotate until the thumbnail is upright, then Confirm. The app locks focus, exposure and white balance and measures the page.\n3. Capture: the border is red while a page turns, yellow while things settle, and green when ready. Press the remote, a volume key, or the Capture button. Turn on Auto to shoot whenever the border stays green.\n4. Processing runs in the background. Each shot is cropped, split at the spine, flattened, straightened and read with on-device OCR.\n5. Review: the grid shows a badge per page. Open Flags to fix uncertain words one at a time. Page number jumps are shown with a Reshoot button.\n6. Export: searchable PDF, Word, or both.\n\nTip: long-press the state label on the capture screen to tune thresholds.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_tagline">English Hawaiian Document Scanner</string>
+    <string name="dashboard_summary">%1$d books · %2$d pages · %3$d words to check</string>
+    <string name="dashboard_empty_title">Scan your first book</string>
+    <string name="dashboard_empty_steps">1. Put your phone on a stand, looking straight down at the book.\n2. Tap New book and scan the title page.\n3. Turn pages. Huli takes the photo when the border turns green.</string>
+    <string name="dashboard_setup_guide">How to set up</string>
+    <string name="dashboard_status_empty">No pages yet</string>
+    <string name="dashboard_status_check">%1$d words to check</string>
+    <string name="dashboard_status_ready">Ready to export</string>
+    <string name="book_check_words">Check words</string>
+
+    <!-- Title page scan -->
+    <string name="title_scan_card_title">Scan the title page</string>
+    <string name="title_scan_card_body">Fills in the title and author for you.</string>
+    <string name="title_scan_open">Scan</string>
+    <string name="title_scan_hint">Hold the phone over the title page so the title fills most of the screen, then tap Scan.</string>
+    <string name="title_scan_button">Scan title page</string>
+    <string name="title_scan_reading">Reading the title…</string>
+    <string name="title_scan_failed">Couldn’t read a title. Move closer, hold steady and try again.</string>
+
+    <!-- Page viewer -->
+    <string name="viewer_page_title">Page %1$d</string>
+    <string name="viewer_position">%1$d of %2$d</string>
+    <string name="viewer_printed">printed p. %1$s</string>
+    <string name="viewer_to_check">%1$d to check</string>
+    <string name="viewer_no_text">No text was found on this page.</string>
+    <string name="viewer_mode_text">Text</string>
+    <string name="viewer_mode_image">Image</string>
+    <string name="viewer_hint">Tap any word to correct it. Amber words need a check.</string>
+    <string name="viewer_prev">‹ Previous</string>
+    <string name="viewer_next">Next ›</string>
+    <string name="viewer_copy_text">Copy page text</string>
+    <string name="viewer_copied">Page text copied</string>
+    <string name="viewer_edit_title">Correct word</string>
+    <string name="viewer_save">Save</string>
+    <string name="viewer_delete_confirm">Delete this page?</string>
+
+    <!-- About -->
+    <string name="about_title">About Huli</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_html"><![CDATA[
+<h3>What Huli does</h3>
+<p>Huli scans printed books with your phone on a stand. It reads English and ʻōlelo Hawaiʻi, including the ʻokina and kahakō, fixes common Hawaiian reading mistakes, points out words it is unsure about, and exports a searchable PDF or a Word file.</p>
+<p>Everything happens on your phone. Nothing is uploaded.</p>
+
+<h3>What you need</h3>
+<ul>
+<li>&nbsp;A tripod or overhead stand, with the phone looking straight down at the book.</li>
+<li>&nbsp;A dark, matte cloth under the book, so the page edges stand out.</li>
+<li>&nbsp;Two lights, one on each side at about 45 degrees. A single lamp gives a yellow glow and shadows.</li>
+<li>&nbsp;Optional: a Bluetooth camera remote (it presses a volume key) and a sheet of glass to hold pages flat.</li>
+</ul>
+
+<h3>Scanning a book</h3>
+<p><b>1. New book.</b> Tap <b>Scan</b> on the title page card to fill in the title and author, or type them. Choose the language, whether the book is printed with ʻokina and kahakō, and the layout.</p>
+<p><b>2. Set up the page.</b> Tap <b>Detect page</b>, drag the corners onto the page edges, and tap <b>Confirm</b>. Keep the page still while Huli locks focus and exposure.</p>
+<p><b>3. Capture.</b> The border is red while you turn a page, yellow while it settles, and green when it is ready. Press the remote, a volume key, or <b>Capture</b>. Turn on <b>Auto</b> to shoot every time the border stays green.</p>
+<p><b>4. Keep going.</b> Huli reads the pages in the background while you shoot.</p>
+
+<h3>Checking the text</h3>
+<ul>
+<li>&nbsp;Tap a book to see its pages. Green means clean, amber shows words to check, red needs attention, and gray is blank.</li>
+<li>&nbsp;Tap a page to read its text. Tap any word to correct it. Switch to <b>Image</b> to compare with the photo, and pinch to zoom.</li>
+<li>&nbsp;<b>Check words</b> walks you through every doubtful word, one at a time, with ʻ ā ē ī ō ū buttons.</li>
+<li>&nbsp;If printed page numbers jump, Huli warns you and offers <b>Reshoot</b>.</li>
+<li>&nbsp;Long-press a page to reshoot it, insert a page after it, mark it blank, move it, or delete it.</li>
+</ul>
+
+<h3>Exporting</h3>
+<p>Tap <b>Export</b> to save a searchable PDF, a Word file, or both.</p>
+
+<h3>Tips</h3>
+<ul>
+<li>&nbsp;<b>Single page</b> gives the sharpest text, which matters for small print and for ʻokina and kahakō. <b>Two-page spread</b> is faster.</li>
+<li>&nbsp;Bring the camera close enough that the page nearly fills the preview.</li>
+<li>&nbsp;Long-press the status label on the capture screen to adjust the capture settings.</li>
+<li>&nbsp;<b>Reprocess all pages</b> in a book’s menu reads every page again, for example after an update.</li>
+</ul>
+
+<h3>Open source</h3>
+<p>Huli is free and open source. Huli’s own code is released under the MIT License. It is built on <a href="https://github.com/egdels/makeacopy">MakeACopy</a> by Christian Kierdorf, used under the Apache License 2.0, together with PaddleOCR, OpenCV and ONNX Runtime (Apache License 2.0). The Hawaiian word list comes from the Hawaiian Corpus Project (CC0) and the English word list from FrequencyWords (CC BY-SA 4.0).</p>
+<p>Source code: <a href="https://github.com/olagon/huli">github.com/olagon/huli</a></p>
+]]></string>
 </resources>

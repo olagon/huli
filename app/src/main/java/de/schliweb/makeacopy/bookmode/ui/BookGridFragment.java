@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -61,6 +56,7 @@ public class BookGridFragment extends Fragment {
   private final Handler main = new Handler(Looper.getMainLooper());
   private final Runnable poll = this::refresh;
   private PageNumberChecker.Gap firstGap;
+  private com.google.android.material.appbar.MaterialToolbar toolbar;
 
   @Nullable
   @Override
@@ -72,7 +68,8 @@ public class BookGridFragment extends Fragment {
   public void onViewCreated(@NonNull View v, @Nullable Bundle saved) {
     dao = BookDatabase.get(requireContext()).dao();
     book = dao.getBook(requireArguments().getLong(BookArgs.BOOK_ID));
-    ((TextView) v.findViewById(R.id.book_grid_title)).setText(book.title);
+    toolbar = BookUi.toolbar(this, v, book.title);
+    toolbar.setOnMenuItemClickListener(this::onMore);
     info = v.findViewById(R.id.book_grid_info);
     warning = v.findViewById(R.id.book_grid_warning);
     reshoot = v.findViewById(R.id.button_book_reshoot);
@@ -101,14 +98,12 @@ public class BookGridFragment extends Fragment {
     v.findViewById(R.id.button_book_capture_more).setOnClickListener(x -> openCapture("append", -1, -1));
     flagsButton.setOnClickListener(x -> nav(R.id.navigation_book_flags));
     v.findViewById(R.id.button_book_export).setOnClickListener(x -> nav(R.id.navigation_book_export));
-    v.findViewById(R.id.button_book_more).setOnClickListener(this::showMore);
     reshoot.setOnClickListener(x -> {
       if (firstGap == null) return;
       BookPageEntity after = pages.get(Math.min(firstGap.afterPageIndex(), pages.size() - 1));
       BookShotEntity s = dao.getShot(after.shotId);
       openCapture("insert", s == null ? dao.maxSeq(book.id) + 1 : s.seq + 1, -1);
     });
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.book_grid_buttons));
   }
 
   @Override
@@ -138,6 +133,7 @@ public class BookGridFragment extends Fragment {
     info.setText(sb);
     requireView().findViewById(R.id.book_grid_empty).setVisibility(pages.isEmpty() ? View.VISIBLE : View.GONE);
     flagsButton.setText(getString(R.string.book_review_flags, dao.countUnresolvedFlags(book.id)));
+    buildMenu();
 
     List<String> numbers = new ArrayList<>();
     for (BookPageEntity p : pages) numbers.add(BookPageEntity.BLANK.equals(p.status) ? null : p.printedPageNumber);
@@ -155,6 +151,7 @@ public class BookGridFragment extends Fragment {
   }
 
   private void bind(Holder h, BookPageEntity p, int position) {
+    int open = dao.countUnresolvedFlagsForPage(p.id);
     h.label.setText(String.valueOf(position + 1) + (p.printedPageNumber != null ? " (" + p.printedPageNumber + ")" : ""));
     int color;
     String badge;
@@ -163,10 +160,10 @@ public class BookGridFragment extends Fragment {
       badge = "blank";
     } else if (BookPageEntity.NEEDS_ATTENTION.equals(p.status)) {
       color = 0xFFD32F2F;
-      badge = "!" + (p.flaggedCount > 0 ? " " + p.flaggedCount : "");
-    } else if (p.flaggedCount > 0) {
+      badge = "!" + (open > 0 ? " " + open : "");
+    } else if (open > 0) {
       color = 0xFFFFA000;
-      badge = String.valueOf(p.flaggedCount);
+      badge = String.valueOf(open);
     } else {
       color = 0xFF388E3C;
       badge = "✓";
@@ -182,7 +179,16 @@ public class BookGridFragment extends Fragment {
         if (path != null && path.equals(h.image.getTag())) h.image.setImageBitmap(b);
       });
     });
-    h.itemView.setOnClickListener(v -> showPageMenu(v, p, position));
+    h.itemView.setOnClickListener(v -> {
+      Bundle args = new Bundle();
+      args.putLong(BookArgs.BOOK_ID, book.id);
+      args.putLong(BookArgs.PAGE_ID, p.id);
+      Navigation.findNavController(requireView()).navigate(R.id.navigation_page_viewer, args);
+    });
+    h.itemView.setOnLongClickListener(v -> {
+      showPageMenu(v, p, position);
+      return true;
+    });
   }
 
   private void showPageMenu(View anchor, BookPageEntity p, int position) {
@@ -227,39 +233,42 @@ public class BookGridFragment extends Fragment {
     menu.show();
   }
 
-  private void showMore(View anchor) {
-    PopupMenu menu = new PopupMenu(requireContext(), anchor);
-    menu.getMenu().add(0, 1, 0, getString(R.string.book_auto_fixed, dao.autoFixedFlags(book.id).size()));
-    menu.getMenu().add(0, 2, 1, R.string.book_retry_failed);
-    menu.getMenu().add(0, 3, 2, R.string.book_free_space);
-    menu.getMenu().add(0, 4, 3, R.string.book_help);
-    menu.getMenu().add(0, 5, 4, R.string.book_reprocess);
-    menu.setOnMenuItemClickListener(item -> {
-      switch (item.getItemId()) {
-        case 1 -> showAutoFixed();
-        case 2 -> {
-          dao.retryFailedShots(book.id);
-          BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
-          refresh();
-        }
-        case 3 -> new MaterialAlertDialogBuilder(requireContext())
-            .setMessage(R.string.book_free_space_confirm)
-            .setNegativeButton(R.string.book_cancel, null)
-            .setPositiveButton(R.string.book_ok, (d, w) -> freeSpace())
-            .show();
-        case 4 -> nav(R.id.navigation_book_help);
-        case 5 -> {
-          dao.deleteOrphanFlags(book.id);
-          dao.deleteOrphanPages(book.id);
-          dao.resetAllShots(book.id);
-          BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
-          refresh();
-        }
-        default -> {}
+  private void buildMenu() {
+    android.view.Menu m = toolbar.getMenu();
+    m.clear();
+    m.add(0, 1, 0, getString(R.string.book_auto_fixed, dao.autoFixedFlags(book.id).size()));
+    m.add(0, 5, 1, R.string.book_reprocess);
+    m.add(0, 2, 2, R.string.book_retry_failed);
+    m.add(0, 3, 3, R.string.book_free_space);
+    m.add(0, 4, 4, R.string.about_title);
+  }
+
+  private boolean onMore(android.view.MenuItem item) {
+    switch (item.getItemId()) {
+      case 1 -> showAutoFixed();
+      case 2 -> {
+        dao.retryFailedShots(book.id);
+        BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
+        refresh();
       }
-      return true;
-    });
-    menu.show();
+      case 3 -> new MaterialAlertDialogBuilder(requireContext())
+          .setMessage(R.string.book_free_space_confirm)
+          .setNegativeButton(R.string.book_cancel, null)
+          .setPositiveButton(R.string.book_ok, (d, w) -> freeSpace())
+          .show();
+      case 4 -> Navigation.findNavController(requireView()).navigate(R.id.navigation_about);
+      case 5 -> {
+        dao.deleteOrphanFlags(book.id);
+        dao.deleteOrphanPages(book.id);
+        dao.resetAllShots(book.id);
+        BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
+        refresh();
+      }
+      default -> {
+        return false;
+      }
+    }
+    return true;
   }
 
   private void freeSpace() {
@@ -302,12 +311,7 @@ public class BookGridFragment extends Fragment {
   }
 
   private void openCapture(String mode, int seq, long shotId) {
-    Bundle args = new Bundle();
-    args.putLong(BookArgs.BOOK_ID, book.id);
-    args.putString(BookArgs.MODE, mode);
-    args.putInt(BookArgs.SEQ, seq);
-    args.putLong(BookArgs.SHOT_ID, shotId);
-    Navigation.findNavController(requireView()).navigate(R.id.navigation_book_capture, args);
+    BookUi.openCapture(this, book.id, mode, seq, shotId);
   }
 
   private void nav(int dest) {

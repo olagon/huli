@@ -2,20 +2,43 @@ NOTICE
 
 Huli: English Hawaiian Document Scanner
 ---------------------------------------
-This is a modified version of MakeACopy (https://github.com/egdels/makeacopy),
+Huli is a modified version of MakeACopy (https://github.com/egdels/makeacopy),
 modified by Olin Lagon in 2026. MakeACopy is a trademark of its author and is
-not used to name or brand this fork. Major changes in this version:
-  * New "Book Mode" (package de.schliweb.makeacopy.bookmode): tripod book
-    scanning with a ready border, background processing of shots into pages,
-    on-device OCR with the latin model, Hawaiian ʻokina/kahakō normalization,
-    word flags and a review queue, searchable PDF and Word (.docx) export.
-  * Bundled word lists under assets/bookmode/:
-      - haw.txt.gz, derived from the Hawaiian Corpus Project frequency list
-        by dohliam (CC0 1.0), https://github.com/dohliam/hawaiian-corpus
-      - eng.txt.gz, derived from FrequencyWords by hermitdave
-        (CC BY-SA 4.0), https://github.com/hermitdave/FrequencyWords
-  * Renamed application id (com.olagon.huli), app name and icon.
-  * Added the AndroidX WorkManager dependency (Apache 2.0).
+not used to name or brand Huli. Huli is not affiliated with or endorsed by the
+MakeACopy project.
+
+Licensing of this repository:
+  * Files added by Huli carry the header "SPDX-License-Identifier: MIT" and are
+    licensed under the MIT License (see LICENSE-MIT). This covers Book Mode
+    (de.schliweb.makeacopy.bookmode, its tests, layouts, strings, colors and
+    drawables) and README.md.
+  * All other files come from MakeACopy and remain under the Apache License
+    2.0 (see LICENSE), including the upstream files Huli modified.
+  * Bundled word lists keep their own licenses:
+      - app/src/main/assets/bookmode/haw.txt.gz, derived from the Hawaiian
+        Corpus Project frequency list by dohliam (CC0 1.0),
+        https://github.com/dohliam/hawaiian-corpus
+      - app/src/main/assets/bookmode/eng.txt.gz, derived from FrequencyWords
+        by hermitdave (CC BY-SA 4.0),
+        https://github.com/hermitdave/FrequencyWords
+
+Upstream MakeACopy files modified by Huli (Apache License 2.0, section 4(b)):
+  * README.md: replaced by the Huli README; the original is UPSTREAM_README.md.
+  * NOTICE: this section added.
+  * app/build.gradle: application id, version, AndroidX WorkManager dependency.
+  * app/src/main/AndroidManifest.xml: foreground-service and notification
+    permissions, WorkManager service type, share and "Open with" targets
+    removed.
+  * app/src/main/res/navigation/mobile_navigation.xml: Book Mode screens,
+    start destination changed to the Book Mode dashboard.
+  * app/src/main/res/values/strings.xml: app name.
+  * app/src/main/res/values/themes.xml, values-night/themes.xml: brand colors.
+  * app/src/main/res/mipmap-anydpi/ic_launcher.xml,
+    values/ic_launcher_background.xml: new launcher icon (the MakeACopy icon
+    images were removed).
+  * app/src/paddle/java/de/schliweb/makeacopy/utils/ocr/paddle/
+    PaddleLanguageRouter.java: routes "haw" to the latin recognition model.
+  * Added dependency: AndroidX WorkManager (Apache License 2.0).
 
 This project is licensed under the Apache License 2.0 (see LICENSE). It also
 includes third-party components under their respective licenses as noted below.

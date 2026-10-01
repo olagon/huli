@@ -1,11 +1,6 @@
 /*
  * Copyright 2026 Olin Lagon
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * SPDX-License-Identifier: MIT
  */
 package de.schliweb.makeacopy.bookmode.ui;
 
@@ -90,6 +85,7 @@ public class BookExportFragment extends Fragment {
 
   @Override
   public void onViewCreated(@NonNull View v, @Nullable Bundle saved) {
+    BookUi.toolbar(this, v, getString(R.string.book_export));
     dao = BookDatabase.get(requireContext()).dao();
     book = dao.getBook(requireArguments().getLong(BookArgs.BOOK_ID));
     pdfBox = v.findViewById(R.id.export_pdf);
@@ -101,7 +97,6 @@ public class BookExportFragment extends Fragment {
     font = v.findViewById(R.id.export_font);
     status = v.findViewById(R.id.export_status);
     v.findViewById(R.id.button_book_do_export).setOnClickListener(x -> start());
-    de.schliweb.makeacopy.utils.ui.UIUtils.applyBottomBarInsets(v.findViewById(R.id.export_buttons));
   }
 
   private List<BookPageEntity> pages() {

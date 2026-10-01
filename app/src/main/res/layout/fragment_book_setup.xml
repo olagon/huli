@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
+
+    <include layout="@layout/view_book_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,11 +19,58 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/book_new"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:strokeWidth="0dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/book_cover_preview"
+                        android:layout_width="54dp"
+                        android:layout_height="74dp"
+                        android:layout_marginEnd="12dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:contentDescription="@null" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_scan_card_title"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_scan_card_body"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:textAppearance="?attr/textAppearanceBodySmall" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button_scan_title_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/title_scan_open" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/book_storage_warning"
@@ -122,25 +172,26 @@
                 android:id="@+id/book_layout_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/book_layout_spread">
-
-                <RadioButton
-                    android:id="@+id/book_layout_spread"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/book_layout_spread" />
+                android:checkedButton="@+id/book_layout_single">
 
                 <RadioButton
                     android:id="@+id/book_layout_single"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/book_layout_single" />
+
+                <RadioButton
+                    android:id="@+id/book_layout_spread"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_layout_spread" />
             </RadioGroup>
 
             <CheckBox
                 android:id="@+id/book_first_right_only"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/book_first_right_only" />
 
             <TextView

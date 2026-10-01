@@ -7,6 +7,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
+// Modified by Olin Lagon (2026) for Huli: "haw" routes to the latin model. See NOTICE.
 package de.schliweb.makeacopy.utils.ocr.paddle;
 
 import androidx.annotation.Nullable;
