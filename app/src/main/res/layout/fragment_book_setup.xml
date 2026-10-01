@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_new"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+            <TextView
+                android:id="@+id/book_storage_warning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/book_title_hint"
+                android:inputType="textCapWords"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/book_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/book_author_hint"
+                android:inputType="textCapWords"
+                android:importantForAutofill="no" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_language"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <RadioGroup
+                android:id="@+id/book_language_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/book_lang_both">
+
+                <RadioButton
+                    android:id="@+id/book_lang_eng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_lang_eng" />
+
+                <RadioButton
+                    android:id="@+id/book_lang_haw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_lang_haw" />
+
+                <RadioButton
+                    android:id="@+id/book_lang_both"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_lang_both" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_diacritics"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <RadioGroup
+                android:id="@+id/book_diacritics_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/book_diac_unsure">
+
+                <RadioButton
+                    android:id="@+id/book_diac_with"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_diac_with" />
+
+                <RadioButton
+                    android:id="@+id/book_diac_without"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_diac_without" />
+
+                <RadioButton
+                    android:id="@+id/book_diac_unsure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_diac_unsure" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_layout"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <RadioGroup
+                android:id="@+id/book_layout_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/book_layout_spread">
+
+                <RadioButton
+                    android:id="@+id/book_layout_spread"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_layout_spread" />
+
+                <RadioButton
+                    android:id="@+id/book_layout_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_layout_single" />
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/book_first_right_only"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_first_right_only" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_dewarp"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <RadioGroup
+                android:id="@+id/book_dewarp_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/book_dewarp_auto">
+
+                <RadioButton
+                    android:id="@+id/book_dewarp_auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_dewarp_auto" />
+
+                <RadioButton
+                    android:id="@+id/book_dewarp_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_dewarp_off" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/book_setup_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp">
+
+        <Button
+            android:id="@+id/button_book_setup_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/book_next_setup" />
+    </LinearLayout>
+</LinearLayout>

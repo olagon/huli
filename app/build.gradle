@@ -35,11 +35,11 @@ android {
     ndkVersion = '28.0.13004108'
 
     defaultConfig {
-        applicationId "de.schliweb.makeacopy"
+        applicationId "com.olagon.huli"
         minSdk = 29
         targetSdk = 36
-        versionCode 40700
-        versionName "4.7.0"
+        versionCode 1
+        versionName "1.0.0"
 
         // Use default AndroidX test runner
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -261,6 +261,8 @@ dependencies {
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
     implementation libs.activity
+    // Book Mode background processing
+    implementation "androidx.work:work-runtime:2.10.5"
 
 
     // JSON serialization for registry

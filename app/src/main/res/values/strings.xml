@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">Huli</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
     <string name="tip_text_mode_editing">Text mode: Line breaks and punctuation are currently normalized to spaces. If

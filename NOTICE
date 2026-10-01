@@ -1,5 +1,22 @@
 NOTICE
 
+Huli: English Hawaiian Document Scanner
+---------------------------------------
+This is a modified version of MakeACopy (https://github.com/egdels/makeacopy),
+modified by Olin Lagon in 2026. MakeACopy is a trademark of its author and is
+not used to name or brand this fork. Major changes in this version:
+  * New "Book Mode" (package de.schliweb.makeacopy.bookmode): tripod book
+    scanning with a ready border, background processing of shots into pages,
+    on-device OCR with the latin model, Hawaiian ʻokina/kahakō normalization,
+    word flags and a review queue, searchable PDF and Word (.docx) export.
+  * Bundled word lists under assets/bookmode/:
+      - haw.txt.gz, derived from the Hawaiian Corpus Project frequency list
+        by dohliam (CC0 1.0), https://github.com/dohliam/hawaiian-corpus
+      - eng.txt.gz, derived from FrequencyWords by hermitdave
+        (CC BY-SA 4.0), https://github.com/hermitdave/FrequencyWords
+  * Renamed application id (com.olagon.huli), app name and icon.
+  * Added the AndroidX WorkManager dependency (Apache 2.0).
+
 This project is licensed under the Apache License 2.0 (see LICENSE). It also
 includes third-party components under their respective licenses as noted below.
 

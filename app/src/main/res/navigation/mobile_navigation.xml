@@ -61,4 +61,46 @@
         android:name="de.schliweb.makeacopy.ui.library.ScanDetailsFragment"
         android:label="Scan Details"
         tools:layout="@layout/fragment_scan_details" />
+
+    <!-- Book Mode (Huli) -->
+    <fragment
+        android:id="@+id/navigation_book_list"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookListFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_list" />
+    <fragment
+        android:id="@+id/navigation_book_setup"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookSetupFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_setup" />
+    <fragment
+        android:id="@+id/navigation_book_setup_shot"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookSetupShotFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_setup_shot" />
+    <fragment
+        android:id="@+id/navigation_book_capture"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookCaptureFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_capture" />
+    <fragment
+        android:id="@+id/navigation_book_grid"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookGridFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_grid" />
+    <fragment
+        android:id="@+id/navigation_book_flags"
+        android:name="de.schliweb.makeacopy.bookmode.ui.FlagQueueFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_flags" />
+    <fragment
+        android:id="@+id/navigation_book_export"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookExportFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_export" />
+    <fragment
+        android:id="@+id/navigation_book_help"
+        android:name="de.schliweb.makeacopy.bookmode.ui.BookHelpFragment"
+        android:label="@string/book_mode"
+        tools:layout="@layout/fragment_book_help" />
 </navigation>

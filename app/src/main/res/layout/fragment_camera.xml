@@ -229,6 +229,22 @@
                 app:tooltipText="@string/open_collections"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
+        <!-- Book Mode entry (Huli) -->
+        <ImageButton
+                android:id="@+id/button_open_book_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:contentDescription="@string/book_open_book_mode"
+                android:src="@drawable/ic_menu_book"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/book_open_book_mode"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
     </LinearLayout>
 
     <!-- Zoom/Lens button: rechtsbündig analog zum Aspect-Ratio-Button im CropFragment. -->

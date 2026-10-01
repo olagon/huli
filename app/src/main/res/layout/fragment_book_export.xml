@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_export"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+            <CheckBox
+                android:id="@+id/export_pdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/book_export_pdf" />
+
+            <CheckBox
+                android:id="@+id/export_docx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/book_export_docx" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/book_export_quality"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <RadioGroup
+                android:id="@+id/export_quality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/export_quality_standard">
+
+                <RadioButton
+                    android:id="@+id/export_quality_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_quality_high" />
+
+                <RadioButton
+                    android:id="@+id/export_quality_standard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_quality_standard" />
+
+                <RadioButton
+                    android:id="@+id/export_quality_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_quality_small" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/book_export_docx"
+                android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+            <CheckBox
+                android:id="@+id/export_drop_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/book_opt_drop_headers" />
+
+            <CheckBox
+                android:id="@+id/export_page_markers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_opt_page_markers" />
+
+            <CheckBox
+                android:id="@+id/export_page_breaks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_opt_page_breaks" />
+
+            <EditText
+                android:id="@+id/export_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/book_font_hint"
+                android:text="Arial"
+                android:inputType="text"
+                android:importantForAutofill="no" />
+
+            <TextView
+                android:id="@+id/export_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/export_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp">
+
+        <Button
+            android:id="@+id/button_book_do_export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/book_export" />
+    </LinearLayout>
+</LinearLayout>

@@ -596,6 +596,15 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
   /** Library entry from Camera screen (feature-gated). */
   private void setupLibraryButton() {
+    // Book Mode (Huli) entry: navigation only, all Book Mode logic lives in the bookmode package.
+    binding.buttonOpenBookMode.setOnClickListener(
+        v -> {
+          try {
+            Navigation.findNavController(requireView()).navigate(R.id.navigation_book_list);
+          } catch (IllegalArgumentException | IllegalStateException ex) {
+            Log.w(TAG, "Navigation to book mode failed", ex);
+          }
+        });
     if (!FeatureFlags.isScanLibraryEnable()) {
       binding.buttonOpenLibraryCam.setVisibility(View.GONE);
       return;
