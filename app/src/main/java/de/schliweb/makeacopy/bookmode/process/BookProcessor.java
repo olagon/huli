@@ -105,9 +105,8 @@ public final class BookProcessor {
     HawaiianNormalizer normalizer = new HawaiianNormalizer(hawaiian ? haw : null, hawaiian ? mode : HawaiianNormalizer.DiacriticsMode.WITHOUT);
     boolean dewarp = BookEntity.DEWARP_AUTO.equals(book.dewarpMode);
 
-    try (OCRHelper ocr = new OCRHelper(ctx)) {
-      ocr.setLanguage("latin"); // the en model cannot output kahakō (spec section 9)
-      ocr.setPaddleHighQualityDetectionEnabled(true); // detector at 1920 px instead of 1536
+    OCRHelper ocr = openOcr(ctx, book.languageMode);
+    try {
       for (int i = 0; i < halves.size(); i++) {
         int[] hx = halves.get(i);
         Point[] hc = {new Point(hx[0], iy0), new Point(hx[1], iy0), new Point(hx[1], iy1), new Point(hx[0], iy1)};
@@ -149,7 +148,7 @@ public final class BookProcessor {
         pe.imagePath = img.getAbsolutePath();
         pe.phoneOcrPath = phoneJson.getAbsolutePath();
         pe.dewarpUsed = usedDewarp;
-        pe.meanConfidence = res.meanConfidence == null ? 0f : (res.meanConfidence > 1 ? res.meanConfidence / 100f : res.meanConfidence);
+        pe.meanConfidence = res.meanConfidence == null ? 0f : res.meanConfidence / 100f;
         pe.wordCount = phoneDoc.words.size();
 
         // Hawaiian normalizer on a copy → final doc + auto-fixed list.
@@ -226,8 +225,28 @@ public final class BookProcessor {
         Log.i(TAG, "shot " + shot.seq + " " + side + ": words=" + pe.wordCount + " flags=" + wf.size() + " page#=" + pe.printedPageNumber + " dewarp=" + usedDewarp);
       }
     } finally {
+      ocr.close();
       warped.recycle();
     }
+  }
+
+  /**
+   * Tesseract with the best English and Māori models. Māori shares Hawaiian's kahakō vowels, so
+   * the pair reads English and ʻōlelo Hawaiʻi; the normalizer then turns ʻokina look-alikes into
+   * U+02BB. Best-model settings also switch off the character whitelist, which would strip ā and ʻ.
+   */
+  public static OCRHelper openOcr(Context ctx, String languageMode) throws Exception {
+    OCRHelper ocr = new OCRHelper(ctx);
+    ocr.setUseBestModelSettings(true);
+    ocr.setPageSegmentationMode(de.schliweb.makeacopy.utils.ocr.OcrPageSegmentationMode.AUTO);
+    ocr.setLanguage(ocrLanguage(languageMode));
+    return ocr;
+  }
+
+  static String ocrLanguage(String languageMode) {
+    if (BookEntity.LANG_ENG.equals(languageMode)) return "eng";
+    if (BookEntity.LANG_HAW.equals(languageMode)) return "mri+eng";
+    return "eng+mri";
   }
 
   private record Candidate(Bitmap bitmap, OCRHelper.OcrResultWords res, double score) {}
@@ -245,7 +264,7 @@ public final class BookProcessor {
       page.recycle();
       page = cleaned;
     }
-    OCRHelper.OcrResultWords res = ocr.runOcrWithWords(page);
+    OCRHelper.OcrResultWords res = ocr.runOcrWithRetry(page);
     return new Candidate(page, res, score(res));
   }
 
@@ -254,8 +273,7 @@ public final class BookProcessor {
     if (res == null || res.words == null) return 0;
     double s = 0;
     for (de.schliweb.makeacopy.utils.ocr.RecognizedWord w : res.words) {
-      float c = w.getConfidence();
-      s += c > 1f ? c / 100.0 : c;
+      s += Math.max(0f, Math.min(100f, w.getConfidence())) / 100.0; // both engines report 0..100
     }
     return s;
   }

@@ -257,13 +257,18 @@ public class BookGridFragment extends Fragment {
           .setPositiveButton(R.string.book_ok, (d, w) -> freeSpace())
           .show();
       case 4 -> Navigation.findNavController(requireView()).navigate(R.id.navigation_about);
-      case 5 -> {
-        dao.deleteOrphanFlags(book.id);
-        dao.deleteOrphanPages(book.id);
-        dao.resetAllShots(book.id);
-        BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
-        refresh();
-      }
+      case 5 -> new MaterialAlertDialogBuilder(requireContext())
+          .setTitle(R.string.book_reprocess)
+          .setMessage(R.string.book_reprocess_confirm)
+          .setNegativeButton(R.string.book_cancel, null)
+          .setPositiveButton(R.string.book_ok, (d, w) -> {
+            dao.deleteOrphanFlags(book.id);
+            dao.deleteOrphanPages(book.id);
+            dao.resetAllShots(book.id);
+            BookProcessWorker.enqueue(requireContext().getApplicationContext(), book.id);
+            refresh();
+          })
+          .show();
       default -> {
         return false;
       }

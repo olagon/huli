@@ -181,7 +181,9 @@ android {
             jniLibs.srcDirs = ['src/main/jniLibs']
         }
         standard {
-            assets.srcDirs += [isLight ? 'src/light/assets' : 'src/full/assets']
+            // Huli (modified): only Tesseract's best English and Maori models (src/huli/assets),
+            // plus the edition fonts; upstream's fast models and OCR dictionaries are left out.
+            assets.srcDirs += [layout.buildDirectory.dir("generated/assets/paddle_edition"), 'src/huli/assets']
         }
         // Flavor-Asset-Verzeichnisse explizit deklarieren, damit AGP sie zusätzlich
         // zu den oben überschriebenen main-Asset-Pfaden mergt.
@@ -191,11 +193,15 @@ android {
         // Add test assets to the debug APK so target-context based asset loading works
         // (e.g. ApplicationProvider.getApplicationContext().getAssets()). The release build
         // is verified separately to ensure no test data leaks into production.
-        standardDebug {
-            assets.srcDirs += [
-                    layout.buildDirectory.dir("generated/assets/test_assets").get().asFile,
-                    'src/androidTest/assets'
-            ]
+        // Huli (modified): the ~120 MB of instrumented-test assets only go into the debug APK
+        // when -PwithTestAssets is passed, so everyday debug builds install quickly.
+        if (project.hasProperty("withTestAssets")) {
+            standardDebug {
+                assets.srcDirs += [
+                        layout.buildDirectory.dir("generated/assets/test_assets").get().asFile,
+                        'src/androidTest/assets'
+                ]
+            }
         }
         // Paddle instrumentation tests must stay Tesseract-free. The shared
         // src/androidTest/java directory contains Tesseract-only tests, so it is
@@ -400,7 +406,7 @@ tasks.configureEach { task ->
     // mergeStandardDebugAssets, and the corresponding *AndroidTestAssets variants.
     // The previous hook only matched the non-flavor names and therefore never fired
     // for the `paddle`/`standard` flavors, so tessdata_best/ was missing in the APK.
-    if (task.name ==~ /merge(Standard)?Debug(AndroidTest)?Assets/) {
+    if (project.hasProperty("withTestAssets") && task.name ==~ /merge(Standard)?Debug(AndroidTest)?Assets/) {
         task.dependsOn("copyBestModelsForTest")
     }
 }
@@ -565,8 +571,15 @@ tasks.whenTaskAdded { task ->
     }
 }
 
+// Huli (modified): the standard flavor reuses the edition copy without upstream tessdata.
+tasks.whenTaskAdded { task ->
+    if (task.name == "mergeStandardDebugAssets" || task.name == "mergeStandardReleaseAssets") {
+        task.dependsOn("copyPaddleEditionAssets")
+    }
+}
+
 tasks.configureEach { task ->
-    if (task.name.toLowerCase(Locale.ROOT).contains("paddle")
+    if ((task.name.toLowerCase(Locale.ROOT).contains("paddle") || task.name.toLowerCase(Locale.ROOT).contains("standard"))
             && task.name.toLowerCase(Locale.ROOT).contains("lint")) {
         task.dependsOn("copyPaddleEditionAssets")
     }

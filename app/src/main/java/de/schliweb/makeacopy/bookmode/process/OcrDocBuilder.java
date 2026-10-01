@@ -40,9 +40,7 @@ public final class OcrDocBuilder {
       w.b[1] = Math.max(0, Math.round(box.top));
       w.b[2] = Math.max(0, Math.round(box.width()));
       w.b[3] = Math.max(0, Math.round(box.height()));
-      float c = rw.getConfidence();
-      if (c > 1f) c = c / 100f;
-      w.c = Math.max(0f, Math.min(1f, c));
+      w.c = Math.max(0f, Math.min(1f, rw.getConfidence() / 100f)); // both engines report 0..100
       w.k = 1;
       ws.add(w);
     }

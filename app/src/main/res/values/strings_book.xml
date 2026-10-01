@@ -58,6 +58,7 @@
     <string name="book_auto_fixed">Auto-fixed words (%1$d)</string>
     <string name="book_retry_failed">Retry failed shots</string>
     <string name="book_reprocess">Reprocess all pages</string>
+    <string name="book_reprocess_confirm">Reads every page again with the current text reader. Words you corrected by hand will be read again too, so your corrections are replaced.</string>
     <string name="book_page_gap">Printed page numbers jump from %1$s to %2$s. Pages may be missing.</string>
     <string name="book_page_repeat">Printed page numbers repeat (%1$s then %2$s).</string>
     <string name="book_reshoot">Reshoot</string>
@@ -158,7 +159,7 @@
 <p><b>1. New book.</b> Tap <b>Scan</b> on the title page card to fill in the title and author, or type them. Choose the language, whether the book is printed with ʻokina and kahakō, and the layout.</p>
 <p><b>2. Set up the page.</b> Tap <b>Detect page</b>, drag the corners onto the page edges, and tap <b>Confirm</b>. Keep the page still while Huli locks focus and exposure.</p>
 <p><b>3. Capture.</b> The border is red while you turn a page, yellow while it settles, and green when it is ready. Press the remote, a volume key, or <b>Capture</b>. Turn on <b>Auto</b> to shoot every time the border stays green.</p>
-<p><b>4. Keep going.</b> Huli reads the pages in the background while you shoot.</p>
+<p><b>4. Keep going.</b> Huli reads the pages in the background while you shoot, using Tesseract’s English and Māori models. Māori uses the same kahakō vowels as Hawaiian.</p>
 
 <h3>Checking the text</h3>
 <ul>
@@ -181,7 +182,7 @@
 </ul>
 
 <h3>Open source</h3>
-<p>Huli is free and open source. Huli’s own code is released under the MIT License. It is built on <a href="https://github.com/egdels/makeacopy">MakeACopy</a> by Christian Kierdorf, used under the Apache License 2.0, together with PaddleOCR, OpenCV and ONNX Runtime (Apache License 2.0). The Hawaiian word list comes from the Hawaiian Corpus Project (CC0) and the English word list from FrequencyWords (CC BY-SA 4.0).</p>
+<p>Huli is free and open source. Huli’s own code is released under the MIT License. It is built on <a href="https://github.com/egdels/makeacopy">MakeACopy</a> by Christian Kierdorf, used under the Apache License 2.0. Text is read with Tesseract OCR and its English and Māori language models, with page detection by OpenCV and ONNX Runtime (all Apache License 2.0). The Hawaiian word list comes from the Hawaiian Corpus Project (CC0) and the English word list from FrequencyWords (CC BY-SA 4.0).</p>
 <p>Source code: <a href="https://github.com/olagon/huli">github.com/olagon/huli</a></p>
 ]]></string>
 </resources>

@@ -7,7 +7,6 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
-// Modified by Olin Lagon (2026) for Huli: "haw" routes to the latin model. See NOTICE.
 package de.schliweb.makeacopy.utils.ocr.paddle;
 
 import androidx.annotation.Nullable;
@@ -122,8 +121,6 @@ final class PaddleLanguageRouter {
         m.put("mac", "cyrillic");
         m.put("srp", "cyrillic"); // serbisch (kyrillisch); latein-Variante via "srp_latn"→latin
         m.put("srp_latn", "latin");
-        // Hawaiian (Book Mode): the latin model has the kahakō vowels, the en model does not.
-        m.put("haw", "latin");
         m.put("kaz", "cyrillic");
         m.put("kir", "cyrillic");
         m.put("mon", "cyrillic");

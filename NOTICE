@@ -14,6 +14,9 @@ Licensing of this repository:
     drawables) and README.md.
   * All other files come from MakeACopy and remain under the Apache License
     2.0 (see LICENSE), including the upstream files Huli modified.
+  * Tesseract language models in app/src/huli/assets/tessdata (eng and mri)
+    are from tesseract-ocr/tessdata_best, Apache License 2.0,
+    https://github.com/tesseract-ocr/tessdata_best
   * Bundled word lists keep their own licenses:
       - app/src/main/assets/bookmode/haw.txt.gz, derived from the Hawaiian
         Corpus Project frequency list by dohliam (CC0 1.0),
@@ -25,7 +28,9 @@ Licensing of this repository:
 Upstream MakeACopy files modified by Huli (Apache License 2.0, section 4(b)):
   * README.md: replaced by the Huli README; the original is UPSTREAM_README.md.
   * NOTICE: this section added.
-  * app/build.gradle: application id, version, AndroidX WorkManager dependency.
+  * app/build.gradle: application id, version, AndroidX WorkManager dependency;
+    the standard (Tesseract) flavor ships only Huli's two Tesseract models; the
+    instrumented-test assets go into debug APKs only with -PwithTestAssets.
   * app/src/main/AndroidManifest.xml: foreground-service and notification
     permissions, WorkManager service type, share and "Open with" targets
     removed.
@@ -36,8 +41,8 @@ Upstream MakeACopy files modified by Huli (Apache License 2.0, section 4(b)):
   * app/src/main/res/mipmap-anydpi/ic_launcher.xml,
     values/ic_launcher_background.xml: new launcher icon (the MakeACopy icon
     images were removed).
-  * app/src/paddle/java/de/schliweb/makeacopy/utils/ocr/paddle/
-    PaddleLanguageRouter.java: routes "haw" to the latin recognition model.
+  * app/src/standard/java/de/schliweb/makeacopy/utils/ocr/OCRHelper.java:
+    adaptive (Sauvola) thresholding for Tesseract.
   * Added dependency: AndroidX WorkManager (Apache License 2.0).
 
 This project is licensed under the Apache License 2.0 (see LICENSE). It also

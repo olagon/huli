@@ -32,6 +32,7 @@ import de.schliweb.makeacopy.bookmode.capture.BookCamera;
 import de.schliweb.makeacopy.bookmode.data.BookDatabase;
 import de.schliweb.makeacopy.bookmode.data.BookDictionaries;
 import de.schliweb.makeacopy.bookmode.hawaiian.HawaiianNormalizer;
+import de.schliweb.makeacopy.bookmode.process.BookProcessor;
 import de.schliweb.makeacopy.bookmode.process.OcrDocBuilder;
 import de.schliweb.makeacopy.bookmode.process.TitleExtractor;
 import de.schliweb.makeacopy.ui.ocr.review.model.OcrDoc;
@@ -151,11 +152,11 @@ public class TitleScanFragment extends Fragment {
       thumb.recycle();
     }
     OcrDoc doc;
-    try (OCRHelper ocr = new OCRHelper(ctx)) {
-      ocr.setLanguage("latin");
-      ocr.setPaddleHighQualityDetectionEnabled(true);
-      doc = OcrDocBuilder.build(ocr.runOcrWithWords(bmp), bmp.getWidth(), bmp.getHeight());
+    OCRHelper ocr = BookProcessor.openOcr(ctx, de.schliweb.makeacopy.bookmode.data.BookEntity.LANG_BOTH);
+    try {
+      doc = OcrDocBuilder.build(ocr.runOcrWithRetry(bmp), bmp.getWidth(), bmp.getHeight());
     } finally {
+      ocr.close();
       bmp.recycle();
     }
     List<TitleExtractor.Line> lines = new ArrayList<>();

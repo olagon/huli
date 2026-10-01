@@ -7,6 +7,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
+// Modified by Olin Lagon (2026) for Huli: adaptive thresholding. See NOTICE.
 package de.schliweb.makeacopy.utils.ocr;
 
 import android.content.Context;
@@ -271,6 +272,9 @@ public class OCRHelper {
       // Bessere Worttrennung
       setVariable("tessedit_word_for_word", "0");
       setVariable("tessedit_enable_bigram_correction", "1");
+      // Huli (modified): adaptive (Sauvola) thresholding keeps text readable where a book page
+      // is shaded or unevenly lit; the global default dropped whole line starts.
+      setVariable("thresholding_method", "2");
 
       // --- Best model specific optimizations ---
       if (useBestModelSettings) {
